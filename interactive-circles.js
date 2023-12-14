@@ -4,39 +4,33 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const bigCircle = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  radius: Math.min(canvas.width, canvas.height) / 2 - 10,
+};
+
 const circles = [];
 const lines = [];
-
-const wind = {
-  x: 0.02, // 바람의 x 방향 세기
-  y: 0.02, // 바람의 y 방향 세기
-};
-
-const wall = {
-  left: 0,
-  top: 0,
-  right: canvas.width,
-  bottom: canvas.height,
-};
 
 let isMouseDown = false;
 
 // 마우스 클릭 상태 이벤트 처리
-canvas.addEventListener('mousedown', () => {
+canvas.addEventListener('mousedown', (event) => {
+  const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+  const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+  // 큰 원 안에서만 작은 원 생성
+  if (isInsideBigCircle(mouseX, mouseY)) {
+    createSmallCircle(mouseX, mouseY);
+    draw();
+  }
+
   isMouseDown = true;
 });
 
 canvas.addEventListener('mouseup', () => {
   isMouseDown = false;
-
-  if (circles.length < 10) {
-    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-
-    createSmallCircle(mouseX, mouseY);
-
-    draw();
-  }
 });
 
 // 마우스 이동 이벤트 처리
@@ -44,7 +38,7 @@ canvas.addEventListener('mousemove', (event) => {
   const mouseX = event.clientX - canvas.getBoundingClientRect().left;
   const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
-  if (isMouseDown) {
+  if (isMouseDown && isInsideBigCircle(mouseX, mouseY)) {
     createSmallCircle(mouseX, mouseY);
     draw();
   }
@@ -87,27 +81,20 @@ function getRandomColor() {
   return color;
 }
 
-// 바람에 의한 랜덤한 초기 속도의 최대값
-const maxWindSpeed = 1;
-
-// 바람에 의한 속도 업데이트 함수
-function updateWind() {
-  wind.x += (Math.random() - 0.5) * 0.01;
-  wind.y += (Math.random() - 0.5) * 0.01;
-
-  const speed = Math.sqrt(wind.x ** 2 + wind.y ** 2);
-  if (speed > maxWindSpeed) {
-    const scaleFactor = maxWindSpeed / speed;
-    wind.x *= scaleFactor;
-    wind.y *= scaleFactor;
-  }
+// 큰 원 안에 위치하는지 확인하는 함수
+function isInsideBigCircle(x, y) {
+  const distance = Math.sqrt((x - bigCircle.x) ** 2 + (y - bigCircle.y) ** 2);
+  return distance <= bigCircle.radius;
 }
 
 // 화면 업데이트 함수
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  updateWind();
+  ctx.beginPath();
+  ctx.arc(bigCircle.x, bigCircle.y, bigCircle.radius, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.closePath();
 
   for (const line of lines) {
     ctx.beginPath();
@@ -132,15 +119,15 @@ function draw() {
     circle.ay *= 0.98;
 
     if (
-      circle.x - circle.radius < wall.left ||
-      circle.x + circle.radius > wall.right
+      circle.x - circle.radius < bigCircle.x - bigCircle.radius ||
+      circle.x + circle.radius > bigCircle.x + bigCircle.radius
     ) {
       circle.vx *= -1;
       circle.ax *= -1;
     }
     if (
-      circle.y - circle.radius < wall.top ||
-      circle.y + circle.radius > wall.bottom
+      circle.y - circle.radius < bigCircle.y - bigCircle.radius ||
+      circle.y + circle.radius > bigCircle.y + bigCircle.radius
     ) {
       circle.vy *= -1;
       circle.ay *= -1;
