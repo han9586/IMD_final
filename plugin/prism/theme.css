@@ -1,0 +1,144 @@
+code[class*='language-'],
+pre[class*='language-'] {
+  color: oklch(80% 0.00625 0/1);
+}
+
+pre[class*='language-']::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+pre[class*='language-']::-webkit-scrollbar-track {
+  background-color: oklch(22% 0 0/1);
+}
+pre[class*='language-']::-webkit-scrollbar-thumb {
+  background-color: oklch(60% 0 0/1);
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  background: oklch(30% 0 0/1);
+}
+
+:not(pre) > code[class*='language-'] {
+  padding-block: 0.125em;
+  padding-inline: 0.5em;
+}
+
+.token.block-comment,
+.token.cdata,
+.token.comment,
+.token.doctype,
+.token.prolog {
+  color: oklch(60% 0 0/1);
+}
+
+.token.punctuation {
+  color: oklch(80% 0.00625 0/1);
+}
+
+.token.attr-name,
+.token.deleted,
+.token.namespace,
+.token.tag {
+  color: oklch(70% 0.15 19deg);
+}
+
+.token.function-name {
+  color: oklch(70% 0.15 250deg);
+}
+
+.token.boolean,
+.token.function,
+.token.number {
+  color: oklch(70% 0.15 53deg);
+}
+
+.token.class-name,
+.token.constant,
+.token.property,
+.token.symbol {
+  color: oklch(70% 0.15 84deg);
+}
+
+.token.atrule,
+.token.builtin,
+.token.important,
+.token.keyword,
+.token.selector {
+  color: oklch(70% 0.15 326deg);
+}
+
+.token.attr-value,
+.token.char,
+.token.regex,
+.token.string,
+.token.variable {
+  color: oklch(70% 0.15 156deg);
+}
+
+.token.entity,
+.token.operator,
+.token.url {
+  color: oklch(70% 0.15 195deg);
+}
+
+.token.inserted {
+  color: oklch(70% 0.15 142deg);
+}
+
+.line-highlight {
+  margin-top: 0.9em;
+  background: oklch(80% 0.135 0/0.08);
+  background: linear-gradient(
+    to right,
+    oklch(80% 0.135 0/0.08) 70%,
+    oklch(80% 0.135 0/0)
+  );
+}
+
+.line-highlight::before,
+.line-highlight[data-end]::after {
+  color: oklch(20% 0.09 0/1);
+  background-color: oklch(80% 0.135 0/0.4);
+  box-shadow: 0 1px #fff;
+}
+
+pre[id].linkable-line-numbers span.line-numbers-rows > span:hover::before {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+.line-numbers .line-numbers-rows {
+  border-color: oklch(60% 0 0/1);
+}
+
+.line-numbers-rows > span::before {
+  color: oklch(60% 0 0/1);
+}
+
+div.code-toolbar > .toolbar > .toolbar-item + .toolbar-item {
+  margin-left: 0.5em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button {
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  padding: 0.5em 1em;
+  color: oklch(20% 0.09 0/1);
+  background: oklch(80% 0.135 0/1);
+  border-radius: 512rem;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover {
+  color: oklch(20% 0.09 0/1);
+  background: color-mix(in oklch, oklch(80% 0.135 0/1), oklch(20% 0.09 0/1) 8%);
+}
