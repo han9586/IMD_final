@@ -2,6 +2,8 @@ const particles = [];
 let hoveredParticle = null;
 const imgs = [];
 const imgPaths = ['assets/pImg1.jpg', 'assets/pImg2.jpg'];
+let cam;
+let camGraphics; // 추가
 
 function preload() {
   imgPaths.forEach((eachPath) => {
@@ -11,20 +13,37 @@ function preload() {
 
 function setup() {
   setCanvasContainer('canvas', 1, 1, true);
+  cam = createCapture(VIDEO);
+  cam.size(320, 240); // 크기 조절 (원하는 크기로 조절)
+  cam.hide(); // 기본 캔버스에는 표시하지 않음
+
+  camGraphics = createGraphics(cam.width, cam.height); // 추가
 
   rectMode(CENTER);
   imageMode(CENTER);
 
-  background('white');
+  background('#A6C7CE ');
 }
 
 function draw() {
+  background('#A6C7CE ');
+
+  // Draw camera feed to camGraphics
+  camGraphics.image(cam, 0, 0, cam.width, cam.height);
+
+  // Apply blur filter to camGraphics
+  camGraphics.filter(BLUR, 5); // 블러 강도 조절 가능
+
+  // Apply tint to add color (multiply with white)
+  camGraphics.tint(255, 150); // 투명한 흰색에 150의 투명도로 곱하기
+
+  // Draw camGraphics to the canvas
+  image(camGraphics, width / 2, height / 2, width, height);
+
   chkHover();
   particles.forEach((eachParticle) => {
     eachParticle.update(hoveredParticle);
   });
-
-  background('white');
 
   stroke(0);
   particles.forEach((eachParticle, idx) => {
@@ -37,6 +56,10 @@ function draw() {
       );
     }
   });
+
+  strokeWeight(1);
+  noFill();
+  ellipse(width / 2, height / 2, width - 8, height - 8);
 
   noStroke();
   particles.forEach((eachParticle) => {
@@ -61,12 +84,14 @@ function chkHover() {
   }
 }
 
-function mouseClicked() {
+function mouseDragged() {
   const mouseDistSq = (width / 2 - mouseX) ** 2 + (height / 2 - mouseY) ** 2;
   if (mouseDistSq >= (width / 2) ** 2) return;
+
   const prob = random();
   const random2D = p5.Vector.random2D();
   random2D.mult(random(25, 50));
+
   particles.push(
     new Particle(
       mouseX,
@@ -78,6 +103,7 @@ function mouseClicked() {
       imgs[floor(random(imgs.length))]
     )
   );
+
   if (prob > 0.5) {
     random2D.rotate(random(TAU));
     particles.push(
