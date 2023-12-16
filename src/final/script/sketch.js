@@ -12,12 +12,17 @@ function preload() {
 }
 
 function setup() {
-  setCanvasContainer('canvas', 1, 1, true);
-  cam = createCapture(VIDEO);
-  cam.size(320, 240); // 카메라 크기 조절
-  cam.hide();
+  setCanvasContainer('canvas', 4, 3, true);
+  const constraints = {
+    video: {
+      width: { exact: 320 },
+      height: { exact: 240 },
+    },
+    audio: false,
+  };
 
-  camGraphics = createGraphics(cam.width, cam.height);
+  cam = createCapture(constraints);
+  cam.hide();
 
   rectMode(CENTER);
   imageMode(CENTER);
@@ -28,14 +33,16 @@ function setup() {
 function draw() {
   background('#A6C7CE ');
 
-  camGraphics.image(cam, 0, 0, cam.width, cam.height);
+  captureDot();
 
-  // 블러 필터
-  camGraphics.filter(BLUR, 5); // 블러 강도 조절
+  // camGraphics.image(cam, 0, 0, cam.width, cam.height);
 
-  camGraphics.tint(255, 150); // 곱하기 효과
+  // // 블러 필터
+  // camGraphics.filter(BLUR, 5); // 블러 강도 조절
 
-  image(camGraphics, width / 2, height / 2, width, height);
+  // camGraphics.tint(190, 199, 206, 0); // 곱하기 효과
+
+  // image(camGraphics, width / 2, height / 2, width, height);
 
   chkHover();
   particles.forEach((eachParticle) => {
@@ -65,6 +72,33 @@ function draw() {
   hoveredParticle?.display(hoveredParticle);
 
   console.log(hoveredParticle);
+}
+
+function captureDot() {
+  cam.loadPixels();
+  noStroke();
+  fill('grey');
+  for (let y = 2; y < cam.height; y += 7) {
+    for (let x = 2; x < cam.width; x += 7) {
+      const pixelIdx = 4 * (cam.width * y + x);
+      const r = cam.pixels[pixelIdx + 0];
+      const g = cam.pixels[pixelIdx + 1];
+      const b = cam.pixels[pixelIdx + 2];
+      const a = cam.pixels[pixelIdx + 3];
+      const pixelColor = color(r, g, b);
+      const pixelBrightness = brightness(pixelColor);
+      const canvasX = map(x, 0, cam.width - 1, 0, width - 1);
+      const canvasY = map(y, 0, cam.height - 1, 0, height - 1);
+      const ratio = width / cam.width;
+
+      rect(
+        canvasX,
+        canvasY,
+        ratio * 0.8 * (10 - (10 * pixelBrightness) / 255),
+        ratio * 0.8 * (10 - (10 * pixelBrightness) / 255)
+      );
+    }
+  }
 }
 
 function chkHover() {
