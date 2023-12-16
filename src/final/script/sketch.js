@@ -3,7 +3,7 @@ let hoveredParticle = null;
 const imgs = [];
 const imgPaths = ['assets/pImg1.jpg', 'assets/pImg2.jpg'];
 let cam;
-let camGraphics; // 추가
+let camGraphics;
 
 function preload() {
   imgPaths.forEach((eachPath) => {
@@ -14,10 +14,10 @@ function preload() {
 function setup() {
   setCanvasContainer('canvas', 1, 1, true);
   cam = createCapture(VIDEO);
-  cam.size(320, 240); // 크기 조절 (원하는 크기로 조절)
-  cam.hide(); // 기본 캔버스에는 표시하지 않음
+  cam.size(320, 240); // 카메라 크기 조절
+  cam.hide();
 
-  camGraphics = createGraphics(cam.width, cam.height); // 추가
+  camGraphics = createGraphics(cam.width, cam.height);
 
   rectMode(CENTER);
   imageMode(CENTER);
@@ -28,16 +28,13 @@ function setup() {
 function draw() {
   background('#A6C7CE ');
 
-  // Draw camera feed to camGraphics
   camGraphics.image(cam, 0, 0, cam.width, cam.height);
 
-  // Apply blur filter to camGraphics
-  camGraphics.filter(BLUR, 5); // 블러 강도 조절 가능
+  // 블러 필터
+  camGraphics.filter(BLUR, 5); // 블러 강도 조절
 
-  // Apply tint to add color (multiply with white)
-  camGraphics.tint(255, 150); // 투명한 흰색에 150의 투명도로 곱하기
+  camGraphics.tint(255, 150); // 곱하기 효과
 
-  // Draw camGraphics to the canvas
   image(camGraphics, width / 2, height / 2, width, height);
 
   chkHover();

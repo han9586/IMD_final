@@ -46,7 +46,8 @@ body {
   word-break: keep-all;
   overflow-wrap: break-word;
 
-  background-color: color.get-color-from-role('background');
+  background: linear-gradient(180deg, #a6c7ce 71.33%, #fc897a 100%);
+  height: 100dvh;
 }
 
 @for $i from 1 through 6 {

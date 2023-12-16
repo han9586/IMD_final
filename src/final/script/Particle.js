@@ -28,6 +28,10 @@ class Particle {
       this.isMoving = false;
     }
 
+    // canvas 밖으로 안 나가게
+    this.pos.x = constrain(this.pos.x, this.rad, width - this.rad);
+    this.pos.y = constrain(this.pos.y, this.rad, height - this.rad);
+
     if (this.isMoving) return;
     if (hoveredParticle === this) {
       const dist = p5.Vector.sub(this.tarSize, this.size);
