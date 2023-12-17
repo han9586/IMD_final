@@ -18,10 +18,15 @@
   }
 }
 
-*,
-*::before,
-*::after {
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  position: relative;
   box-sizing: border-box;
+  font-family: 'KoddiUD OnGothic', 'Noto Sans KR', 'Noto Sans CJK KR',
+    'Pretendard', sans-serif;
 }
 
 body {
@@ -42,12 +47,13 @@ body {
 
   font-family: 'Spoqa Han Sans Neo', sans-serif;
   font-weight: 400;
-  color: color.get-color-from-role('on-surface');
+  color: White;
   word-break: keep-all;
   overflow-wrap: break-word;
 
-  background: linear-gradient(180deg, #a6c7ce 71.33%, #fc897a 100%);
-  height: 100dvh;
+  background: url('../style/assets/background.png') center center/cover
+    no-repeat;
+  height: 100vh;
 }
 
 @for $i from 1 through 6 {
@@ -90,11 +96,11 @@ p {
 }
 
 a {
-  color: color.get-color-from-role('primary');
+  color: White;
   text-decoration: none;
 
   &:visited {
-    color: color.get-color-from-role('secondary');
+    color: White;
   }
 }
 
@@ -147,6 +153,20 @@ canvas {
   margin-inline: auto;
   padding-block: map.get(layout.$container-py, 'xl');
   padding-inline: map.get(layout.$container-px, 'xl');
+
+  padding-top: 200px;
+}
+.text {
+  justify-content: center;
+  align-content: center;
+  box-sizing: content-box;
+
+  max-width: map.get(layout.$bp, 'lg');
+  margin-inline: auto;
+  padding-block: map.get(layout.$container-py, 'xl');
+  padding-inline: map.get(layout.$container-px, 'xl');
+
+  padding-top: 200px;
 }
 
 .table,
@@ -196,4 +216,10 @@ canvas {
   padding: 2rem;
 
   background-color: color.get-color-from-role('surface-container-high');
+}
+
+.contents {
+  padding-top: 400px;
+  font-size: 10pt;
+  color: White;
 }

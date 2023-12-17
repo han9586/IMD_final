@@ -15,8 +15,8 @@ function setup() {
   setCanvasContainer('canvas', 4, 3, true);
   const constraints = {
     video: {
-      width: { exact: 320 },
-      height: { exact: 240 },
+      width: { exact: 520 },
+      height: { exact: 440 },
     },
     audio: false,
   };
@@ -34,15 +34,6 @@ function draw() {
   background('#A6C7CE ');
 
   captureDot();
-
-  // camGraphics.image(cam, 0, 0, cam.width, cam.height);
-
-  // // 블러 필터
-  // camGraphics.filter(BLUR, 5); // 블러 강도 조절
-
-  // camGraphics.tint(190, 199, 206, 0); // 곱하기 효과
-
-  // image(camGraphics, width / 2, height / 2, width, height);
 
   chkHover();
   particles.forEach((eachParticle) => {

@@ -9,13 +9,14 @@ body {
   line-height: 2rem;
   overflow: hidden;
   margin: 0;
-  font-family: "Spoqa Han Sans Neo", sans-serif;
+  font-family: 'Spoqa Han Sans Neo', sans-serif;
   font-weight: 400;
   color: oklch(90% 0 0/1);
   word-break: keep-all;
   overflow-wrap: break-word;
-  background: linear-gradient(180deg, #a6c7ce 71.33%, #fc897a 100%);
-  height: 100dvh;
+  background: url('../style/assets/background.png') center center/cover
+    no-repeat;
+  height: 100vh;
 }
 @media (width < 60rem) {
   body {
@@ -149,11 +150,11 @@ p {
 }
 
 a {
-  color: oklch(80% 0.135 0/1);
+  color: White;
   text-decoration: none;
 }
 a:visited {
-  color: oklch(80% 0.05 0/1);
+  color: White;
 }
 
 li + li {
@@ -198,6 +199,7 @@ canvas {
   margin-inline: auto;
   padding-block: 2.5rem;
   padding-inline: 5rem;
+  padding-top: 200px;
 }
 @media (width < 100rem) {
   .container {
@@ -224,7 +226,7 @@ canvas {
   grid-template-columns: repeat(1, max-content) minmax(15.5ch, 1fr);
   row-gap: 0.5em;
   -moz-column-gap: 1.5em;
-       column-gap: 1.5em;
+  column-gap: 1.5em;
 }
 .table--col-3,
 .grid--col-3 {
